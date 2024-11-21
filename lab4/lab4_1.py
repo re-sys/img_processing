@@ -8,19 +8,19 @@ font_path = '/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc'  # 确保�
 font_prop = fm.FontProperties(fname=font_path)
 
 
-def is_nearly_purely_imaginary(H, threshold=1e-5):
-    """
-    判断H的每个元素是否是几乎纯虚数。
+# def is_nearly_purely_imaginary(H, threshold=1e-5):
+#     """
+#     判断H的每个元素是否是几乎纯虚数。
     
-    参数:
-    H: 待判断的复数数组
-    threshold: 用于判断的阈值
+#     参数:
+#     H: 待判断的复数数组
+#     threshold: 用于判断的阈值
 
-    返回:
-    nearly_purely_imaginary: 布尔数组，指示每个元素是否接近纯虚数
-    """
-    real_part = np.real(H)
-    return np.abs(real_part) < threshold
+#     返回:
+#     nearly_purely_imaginary: 布尔数组，指示每个元素是否接近纯虚数
+#     """
+#     real_part = np.real(H)
+#     return np.abs(real_part) < threshold
 
 # 使用示例
 
@@ -38,17 +38,15 @@ def get_Sobel_H(P, Q):
     """
     # Sobel算子（水平和垂直部分）
    # 定义Sobel算子，方向为x
-    # 注意：这里使用相反的符号是因为，在频域滤波中，Sobel算子的符号与空域中的定义需要一致。
-    # 具体来说，负的x方向算子用于提取水平方向的边缘（高亮显示亮度下降的边缘），
-    # 将其与空域滤波中的应用保持一致。
-    sobel_x = -np.array([[-1, 0, 1],
+    # 注意：这里因为给的算子是做自相关计算的，根据数学定理，在频域上应该是取共轭后相乘
+    sobel_x = np.array([[-1, 0, 1],
                         [-2, 0, 2],
                         [-1, 0, 1]], dtype=np.float32)
 
     # 定义Sobel算子，方向为y
     # 同样，这里也使用相反的符号，目的是确保在频域和空域中的操作效果一致。
     # 负的y方向算子用于提取垂直方向的边缘（高亮显示亮度上升的边缘）。
-    sobel_y = -np.array([[1, 2, 1],
+    sobel_y = np.array([[1, 2, 1],
                         [0, 0, 0],
                         [-1, -2, -1]], dtype=np.float32)
 
@@ -74,8 +72,8 @@ def get_Sobel_H(P, Q):
     Hc_y *= (-1) ** (np.indices(Hc_y.shape)[0] + np.indices(Hc_y.shape)[1])
 
     # 4. 将实部置零
-    H_x = np.copy(Hc_x)
-    H_y = np.copy(Hc_y)
+    H_x = np.copy(Hc_x).conj()
+    H_y = np.copy(Hc_y).conj()
     # nearly_purely_imaginary_x = is_nearly_purely_imaginary(H_x)
     # nearly_purely_imaginary_y = is_nearly_purely_imaginary(H_y)
 

@@ -3,9 +3,12 @@ import cv2
 import matplotlib.pyplot as plt
 from matplotlib import font_manager
 
-# 指定字体路径
-font_path = '/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc'
+font_path = '/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc'  # 确保路径正确
 font_prop = font_manager.FontProperties(fname=font_path)
+
+# 设置全局字体
+plt.rcParams['font.family'] = font_prop.get_name()
+plt.rcParams['axes.unicode_minus'] = False  # 显示负号
 def ideal_lowpass_filter(image, D0):
     """
     实现理想低通滤波器
@@ -60,13 +63,13 @@ for i, D0 in enumerate(D0_values):
     # 绘制结果
     plt.subplot(2, 3, i + 1)
     plt.imshow(filtered_image, cmap='gray')
-    plt.title(f'理想低通滤波器 D0 = {D0}', fontsize=12)
+    plt.title(f'理想低通滤波器 D0 = {D0}', fontproperties=font_prop, fontsize=12)  # 使用字体属性
     plt.axis('off')
 
 # 打开原始图像的子图
 plt.subplot(2, 3, len(D0_values) + 1)
 plt.imshow(image, cmap='gray')
-plt.title('原始图像', fontsize=12)
+plt.title('原始图像', fontproperties=font_prop, fontsize=12)  # 使用字体属性
 plt.axis('off')
 
 plt.tight_layout()
