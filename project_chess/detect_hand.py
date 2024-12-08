@@ -261,7 +261,7 @@ if __name__ == '__main__':
 # cv2.drawContours(resize_chessboard, contours, -1, (0, 255, 0), 3)  # 绘制棋盘轮廓
 
 # 3. 显示结果
-chessboard_copy = resize_image_with_padding(chessboard, 640)
+# chessboard_copy = resize_image_with_padding(chessboard, 640)
 # for line in lines:
 #     for point in line:
 #         cv2.circle(chessboard_copy, point, 5, (255, 0, 0), -1)  # 绘制蓝色圆点
