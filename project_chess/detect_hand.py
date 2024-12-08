@@ -130,7 +130,7 @@ def get_grid_info(gray_chessboard):
     # 绘制小轮廓，大轮廓剔除
     for i, cnt in enumerate(contours):
         # 检查当前轮廓的层级，如果父轮廓的索引是 -1，说明它是第0层级
-        if hierarchy[0][i][3] == 2  or hierarchy[0][i][3] == 1:  # 1rd dimension indicates parent index
+        if hierarchy[0][i][3] == 2  or hierarchy[0][i][3] == 0:  # 1rd dimension indicates parent index
             x, y, w, h = cv2.boundingRect(cnt)
             if w>200 or h>200 or w<25 or h<25:
                 continue
