@@ -1,0 +1,10 @@
+# Default HSV + RANSAC + Camera parameters template
+hsv:
+  lower: [0, 0, 0]
+  upper: [179, 255, 255]
+ransac:
+  iterations: 200
+  tolerance: 0.05
+camera:
+  matrix: [600, 0, 320, 0, 600, 240, 0, 0, 1]  # fx,0,cx, 0,fy,cy, 0,0,1
+  dist:   [0, 0, 0, 0, 0] 
