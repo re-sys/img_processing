@@ -3,28 +3,32 @@
 #include <opencv2/opencv.hpp>
 #include <vector>
 
+
 namespace non_ros_hoop {
 
 struct FilterParams {
   // Morphological opening kernel size (odd, >=1)
   int morph_kernel = 5;
   // Median blur kernel size (odd, >=1)
-  int median_kernel = 5;
+  int median_kernel = 9;
 
   // HSV threshold
-  int h_lower = 0;
-  int s_lower = 0;
-  int v_lower = 0;
-  int h_upper = 179;
+  int h_lower = 2;
+  int s_lower = 200;
+  int v_lower = 54;
+
+  int h_upper = 12;
   int s_upper = 255;
-  int v_upper = 255;
+  int v_upper = 216;
 
-  // Contour area filtering
-  double min_area = 500.0;
-  double max_area = 1e6;
 
-  // RANSAC distance threshold (pixels)
-  double ransac_thresh = 5.0;
+
+  // RANSAC distance threshold (relative error on ellipse equation)     
+  double ransac_thresh = 0.1; // |val-1| < thresh is inlier
+  // RANSAC maximum iterations
+  int ransac_iters = 1000;
+
+
 };
 
 class HoopDetector {
@@ -39,6 +43,8 @@ public:
    *   0: HSV threshold mask  
    *   1: Morphologically opened mask  
    *   2: Median-filtered mask  
+   *   3: All contours (before过滤)  
+   *   4: Filtered contours (after厚度/洞数/面积过滤)  
    */
   cv::Mat process(const cv::Mat &frame, std::vector<cv::Mat> *intermediates = nullptr);
 

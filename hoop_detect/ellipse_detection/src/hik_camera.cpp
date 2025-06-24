@@ -3,6 +3,7 @@
 #include <cstring>
 #include <iostream>
 
+
 namespace non_ros_hoop {
 
 HikCamera::HikCamera() {}
@@ -41,9 +42,9 @@ bool HikCamera::open() {
 
   // Set some reasonable default parameters (exposure, gain, pixel format, ...)
   MV_CC_SetEnumValue(handle_, "ExposureAuto", 0);           // Manual exposure
-  MV_CC_SetFloatValue(handle_, "ExposureTime", 3000.0f);    // 3 ms
-  MV_CC_SetEnumValue(handle_, "GainAuto", 0);               // Manual gain
-  MV_CC_SetFloatValue(handle_, "Gain", 10.0f);
+  MV_CC_SetFloatValue(handle_, "ExposureTime", 3000.0f);    // 7 ms
+  MV_CC_SetEnumValue(handle_, "GainAuto", 2);               // Manual gain
+  // MV_CC_SetFloatValue(handle_, "Gain", 10.0f);
   MV_CC_SetEnumValue(handle_, "PixelFormat", PixelType_Gvsp_BGR8_Packed);
 
   // Start stream grabbing
